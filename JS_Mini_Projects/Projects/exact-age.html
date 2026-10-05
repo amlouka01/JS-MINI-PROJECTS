@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exact age</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            gap: 50px;
+        }
+        h1 {
+            color: black;
+            font-size: 70px;
+            font-family: system-ui;
+            text-transform: uppercase;
+        }
+        input {
+            height: 50px;
+            outline: none;
+            border: none;
+            background-color: #444;
+            color: white;
+            padding: 0 40px;
+            font-size: 25px;
+        }
+        #age {
+            width: 800px;
+            font-size: 30px;
+            height: 80px;
+        }
+        .inp {
+            background-color: #444;
+            width: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .inp small {
+            color: white;
+            font-size: 20px;
+            margin-left: 50px;
+            font-family: system-ui;
+        }
+        .inp input {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Enter your Age (year) :</h1>
+    <input type="number" id="age" placeholder="age..">
+    <div class="out">
+        <div class="inp">
+            <small>Months : </small>
+            <input type="number" id="Months" readonly>
+        </div>
+        <div class="inp">
+            <small>Days : </small>
+            <input type="number" id="Days" readonly>
+        </div>
+        <div class="inp">
+            <small>Hours : </small>
+            <input type="number" id="Hours" readonly>
+        </div>
+        <div class="inp">
+            <small>Minutes : </small>
+            <input type="number" id="Minutes" readonly>
+        </div>
+        <div class="inp">
+            <small>Seconds : </small>
+            <input type="number" id="Seconds" readonly>
+        </div>
+    </div>
+
+    <script>
+        let age = document.getElementById("age");
+        let Months = document.getElementById("Months");
+        let Days = document.getElementById("Days");
+        let Hours = document.getElementById("Hours");
+        let Minutes = document.getElementById("Minutes");
+        let Seconds = document.getElementById("Seconds");
+
+
+        age.addEventListener('input', () => {
+            let value = age.value;
+            Months.value = value * 12;
+            Days.value = value * 12 * 30;
+            Hours.value = value * 12 * 30 * 24;
+            Minutes.value = value * 12 * 30 * 24 * 60;
+            Seconds.value = value * 12 * 30 * 24 * 60 * 60;
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do-list</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            gap: 20px;
+        }
+        ::selection {
+            background-color: aliceblue;
+            color: #444;
+        }
+        h1 {
+            font-family: cursive;
+            text-transform: capitalize;
+            font-size: 60px;
+            color: aliceblue;
+            margin-bottom: 30px;
+        }
+        .inp {
+            background-color: #111;
+            width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .inp input {
+            height: 60px;
+            background-color: transparent;
+            border: none;
+            padding-left: 20px;
+            outline: none;
+            color: aliceblue;
+            font-size: 20px;
+            flex: 1;
+        }
+        .inp small {
+            color: #111;
+            background-color: aliceblue;
+            font-size: 35px;
+            font-weight: 900;
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        .inp small:hover {
+            background-color: rgb(188, 240, 188);
+        }
+        .taks {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 400px;
+            gap: 10px;
+            flex-direction: column;
+        }
+        .tax {
+            background-color: aliceblue;
+            padding-left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            transition: 0.5s;
+        }
+        .tax:hover {
+            box-shadow: 5px 5px 0px #000;
+            transform: translateX(10px);
+        }
+        .tax p, .tax small {
+            font-family: system-ui;
+            text-transform: capitalize;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .tax small {
+            background-color: #000;
+            color: aliceblue;
+            padding: 20px 10px;
+            transition: 0.5s;
+        }
+        .tax small:hover {
+            background-color: rgb(160, 2, 2);
+        }
+    </style>
+</head>
+<body>
+
+
+    <h1>to do list</h1>
+    
+    <div class="inp">
+        <input class="inp" type="text" placeholder="what needs to be done ?">
+        <small class="add">+</small>
+    </div>
+    <div class="taks"></div>
+
+    <script>
+        let taks = document.querySelector(".taks");
+        let add = document.querySelector(".add");
+        let inp = document.querySelector("input");
+
+        let arr = [];
+        if (localStorage.getItem("data") != null){
+            arr = JSON.parse(localStorage.getItem("data"));
+        }
+        
+        function show() {
+            let tax = "";
+            for (let i = 0; i < arr.length; i++) {
+                tax += `
+                <div class="tax">
+                    <p>${arr[i]}</p>
+                    <small data-id="${i}" class="delete">delete</small>
+                    </div>
+                    `
+                }
+                taks.innerHTML = tax;
+            }
+            
+        add.addEventListener('click', () => {
+                if (inp.value == "") return ;
+                arr.unshift(inp.value);
+                localStorage.setItem("data", JSON.stringify(arr));
+                arr = JSON.parse(localStorage.getItem("data"));
+                inp.value = "";
+                show(); 
+            });
+        show();
+            
+        taks.addEventListener('click', (e)=> {
+            if (e.target.tagName == 'SMALL') {
+                let index = e.target.dataset.id;
+                arr.splice(index, 1);
+                localStorage.setItem("data", JSON.stringify(arr));
+                show();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 50px;
+        }
+        h1 {
+            font-size: 80px;
+            font-family: cursive;
+            color: black;
+            text-transform: capitalize;
+        }
+        .calc {
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+            gap: 10px;
+        }
+        .out {
+            background-color: aliceblue;
+            height: 120px;
+            width: 390px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 20px;
+            font-size: 30px;
+            font-family: cursive;
+            letter-spacing: 2px;
+        }
+        #boxs {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(5, 70px);
+            gap: 10px;
+        }
+        button {
+            border: none;
+            background-color: aliceblue;
+            font-size: 25px;
+            font-family: cursive;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: rgb(216, 229, 239);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>calculator</h1>
+        <div class="calc">
+            <div class="out"></div>
+            <div id="boxs">
+                <button data-data="c" style="grid-column: 2 span;">C</button>
+                <button data-data="%">%</button>
+                <button data-data="+">+</button>
+                <button data-data="7">7</button>
+                <button data-data="8">8</button>
+                <button data-data="9">9</button>
+                <button data-data="-">-</button>
+                <button data-data="4">4</button>
+                <button data-data="5">5</button>
+                <button data-data="6">6</button>
+                <button data-data="*">*</button>
+                <button data-data="1">1</button>
+                <button data-data="2">2</button>
+                <button data-data="3">3</button>
+                <button data-data="=" style="grid-row: 2 span;">=</button>
+                <button data-data="0">0</button>
+                <button data-data=".">.</button>
+                <button data-data="/">/</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let boxs = document.getElementById("boxs");
+        let out = document.querySelector(".out");
+        let num1 = "";
+        let num2 = "";
+        let op = "";
+        let temp = 1;
+        let f = 0;
+
+
+        let calc = {
+            "+": (a, b) => { return (Number(a) + Number(b)) },
+            "-": (a, b) => { return (Number(a) - Number(b)) },
+            "*": (a, b) => { return (Number(a) * Number(b)) },
+            "/": (a, b) => { return (Number(a) / Number(b)) },
+            "%": (a, b) => { return (Number(a) % Number(b)) }
+        }
+
+        boxs.addEventListener('click', (e) => {
+            if (e.target.tagName !== "BUTTON") return ;
+            let value = e.target.dataset.data;
+            if (value == 'c') {
+                out.innerHTML = "";
+                num1 = "";
+                num2 = "";
+                op = "";
+                return ;
+            }
+            if (['%', '/', '+', '-', '*'].includes(value)) {
+                if (num1 == "") return ;
+                else if (num2 == "") {
+                    op = value;
+                    out.innerHTML = num1;
+                    out.innerHTML += value;
+                } else {
+                    num1 = calc[op](num1, num2);
+                    out.innerHTML = num1;
+                    out.innerHTML += value;
+                    op = value;
+                    num2 = "";
+                }
+                temp = 1;
+                f = 0;
+                return ;
+            }
+            if (value == '=') {
+                if (num1 == "" || num2 == "") return ;
+                num1 = calc[op](num1, num2);
+                out.innerHTML = num1;
+                op = "";
+                num2 = "";
+                return ;
+            }
+            out.innerHTML += value;
+            if (op == "") {
+                if (value == "." || temp == 0) {
+                    if (temp == 0)  {
+                        f = (f * 10) + Number(value);
+                    }   
+                    temp = 0;
+                }
+                if (temp == 1)
+                    num1 = (Number(num1) * 10) + Number(value);
+                num1 = Number(`${Math.trunc(num1)}.${f}`);
+            }
+            else {
+                if (value == "." || temp == 0) {
+                    if (temp == 0)
+                        f = (f * 10) + Number(value);  
+                    temp = 0;
+                }
+                if (temp == 1)
+                    num2 = (Number(num2) * 10) + Number(value);
+                num2 = Number(`${Math.trunc(num2)}.${f}`);
+            }
+        })
+
+    </script>
+</body>
+</html>

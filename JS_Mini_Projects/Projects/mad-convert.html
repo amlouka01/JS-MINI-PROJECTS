@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mad convert</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }           
+        html {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #333;
+        }
+        h1 {
+            color: aliceblue;
+            text-align: center;
+            font-family: system-ui;
+            text-transform: uppercase;
+            font-size: 100px;
+            margin-bottom: 50px;
+        }
+        input {
+            height: 50px;
+            background-color: #000;
+            padding: 0 25px;
+            border: none;
+            outline: none;
+            width: 100%;
+            color: aliceblue;
+            font-size: 18px;
+            transition: 0.5s;
+        }
+        input:focus {
+            transform: scale(1.1);
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .inpts {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .inp {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        small {
+            color: #999;
+            font-family: system-ui;
+            text-align: start;
+            font-size: 16px;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <h1>mad convert</h1>
+    <div class="container">
+        <div class="inp">
+            <small>Moroccan Dirham : </small>
+            <input type="number" class="mad" id="MAD" placeholder="0.00 MAD">
+        </div>
+        <div class="inpts">
+            <div class="inp">
+                <small>US Dollar :</small>
+                <input type="number" class="mad" id="USD" placeholder="0.00 USD">
+            </div>
+            <div class="inp">
+                <small>Euro :</small>
+                <input type="number" class="mad" id="EUR" placeholder="0.00 EUR">
+            </div>
+            <div class="inp">
+                <small>Turkish Lira :</small>
+                <input type="number" class="mad" id="TRY" placeholder="0.00 TRY">
+            </div>
+            <div class="inp">
+                <small>Japanese Yen :</small>
+                <input type="number" class="mad" id="JPY" placeholder="0.00 JPY">
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        let MAD = document.getElementById("MAD");
+        let USD = document.getElementById("USD");
+        let EUR = document.getElementById("EUR");
+        let TRY = document.getElementById("TRY");
+        let JPY = document.getElementById("JPY");
+
+        MAD.addEventListener('input', () => {
+            let value = MAD.value;
+            USD.value = (value * 0.10).toFixed(2);
+            EUR.value = (value * 0.09).toFixed(2);
+            TRY.value = (value * 3.40).toFixed(2);
+            JPY.value = (value * 14.50).toFixed(2);
+        });
+
+        USD.addEventListener('input', () => {
+            let value = USD.value;
+            MAD.value = (value * 10.00).toFixed(2);
+            EUR.value = (value * 0.90).toFixed(2);
+            TRY.value = (value * 34.00).toFixed(2);
+            JPY.value = (value * 145.00).toFixed(2);
+        });
+
+        EUR.addEventListener('input', () => {
+            let value = EUR.value;
+            MAD.value = (value * 11.11).toFixed(2);
+            USD.value = (value * 1.11).toFixed(2);
+            TRY.value = (value * 37.77).toFixed(2);
+            JPY.value = (value * 161.11).toFixed(2);
+        });
+
+        TRY.addEventListener('input', () => {
+            let value = TRY.value;
+            MAD.value = (value * 0.29).toFixed(2);
+            USD.value = (value * 0.029).toFixed(4); 
+            EUR.value = (value * 0.026).toFixed(4);
+            JPY.value = (value * 4.26).toFixed(2);
+        });
+
+        JPY.addEventListener('input', () => {
+            let value = JPY.value;
+            MAD.value = (value * 0.069).toFixed(2);
+            USD.value = (value * 0.0069).toFixed(4);
+            EUR.value = (value * 0.0062).toFixed(4);
+            TRY.value = (value * 0.23).toFixed(2);
+        });
+    </script>
+</body>
+</html>
